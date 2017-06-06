@@ -1,0 +1,84 @@
+<!doctype html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width,initial scale=1.0">
+<script type="text/javascript">
+function add_function()
+{
+	var node=document.createElement("LI");
+	var textnode=document.createTextNode(prompt("Please enter your note","User"));
+	node.appendChild(textnode);
+	document.getElementById("div").appendChild(node);
+}
+function delete_function()
+{
+	var parent=document.getElementById("myList");
+	var child=document.getElementById("div");
+	parent.removeChild(child);
+}
+function save_edit_function()
+{
+
+	var editElem=document.getElementById("div")||document.getElementById("myList");
+	editElem.contentEditable="false";
+	var userVersion=editElem.innerHTML;
+	localStorage.userEdits=userVersion;
+	alert("Edits saved");
+	document.getElementById("update").innerHTML="To do list-";
+}
+function edit_function()
+{
+	var editElem=document.getElementById("div");
+	document.getElementById("div").contentEditable="true";
+	alert("Content is now editable");
+	var userVersion=editElem.innerHTML;
+	localStorage.userEdits=userVersion;
+}
+/*function checkEdits()
+{
+	if(localStorage.userEdits!=null)
+		document.getElementById("div").innerHTML=localStorage.userEdits;
+}*/
+</script>
+<style type='text/css'>
+body
+{
+	-webkit-animation:colorchange 15s infinite;
+}
+@-webkit-keyframes colorchange
+{
+	0%{background-color:lightgreen;}
+	25%{background-color:pink;}
+	50%{background-color:aquamarine;}
+	75%{background-color:lightyellow;}
+	100%{background-color:lightblue;}
+}    
+
+ h1
+{
+	font-family:cursive;
+	color:red;
+}
+</style>
+<title>
+Joe Hacker's world
+</title>
+</head>
+<body >
+<h1 style='border:3px solid black'>Welcome to Joe Hacker's personal webpage</h1>
+<u1 id="myList">
+<p id="update">To do list-</p>
+<div id="div">
+<li>Appointment with Mr. Khan</li>
+<li>Deliver a lecture in St. John's University</li>
+</u1>
+</div>
+<hr />
+<form>
+<input type="button" value="Add notes" title="Click here to add notes" onclick="add_function()">
+<input type="button" value="Edit notes" title="Click to edit notes" onclick="edit_function()">
+<input type="button" value="Delete notes" title="Click here to delete notes" onclick="delete_function()">
+<input type="button" value="Save notes" title="Click to save notes" onclick="save_edit_function()">
+</form>
+</body>
+</html>
