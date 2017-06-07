@@ -3,16 +3,6 @@
 <head>
 <meta name="viewport" content="width=device-width,initial scale=1.0">
 <style type='text/css'>
-.redcolor{
-	color:red;
-}
-.yellowcolor{
-	color:yellow;
-}
-.greencolor
-{
-	color:green;
-}
 body
 {
 	-webkit-animation:colorchange 15s infinite;
@@ -32,39 +22,56 @@ body
 }
 </style>
 <script type="text/javascript">
-var node,textnode,editElem,parent,child,userVersion,select;
+var node,textnode,editElem,parent,child,userVersion,select,x1=0,i,l,par,DIV;
 function add_function()
 {
-	node=document.createElement("LI");
-	textnode=document.createTextNode(prompt("Please enter your note","User"));
-	node.appendChild(textnode);
-	select=prompt("Enter your priority color","color");
+	x1++;
+	DIV=document.createElement("DIV");
+	DIV.setAttribute("id","DIV"+x1);
+	var x=prompt("Please enter your note","User");
+	textnode=document.createTextNode(x);
+	DIV.appendChild(textnode);
+	node=document.getElementById("update");
+	node.appendChild(DIV);
+	select=prompt("Enter your priority color- Red for high priority,yellow for medium priority and green for low priority","color");
+	document.getElementById("div").appendChild(node);
 if(select=="green"){
-   	node.setAttribute("color","greencolor");
+	document.getElementById("DIV"+x1).setAttribute("value","0");
+   	document.getElementById("DIV"+x1).setAttribute("style","background-color:green");
         }
    else if(select=="red"){
-   node.setAttribute("color","redcolor");
+   document.getElementById("DIV"+x1).setAttribute("value","2");
+   document.getElementById("DIV"+x1).setAttribute("style","background-color:red");
    }
    else if(select=="yellow"){
-   node.setAttribute("color","yellowcolor");
+   	document.getElementById("DIV"+x1).setAttribute("value","1");
+   	  document.getElementById("DIV"+x1).setAttribute("style","background-color:yellow");
+      }
    }
-   document.getElementById("div").appendChild(node);
-   }
+/*function sort_function()
+   {
+   var toSort=document.getElementById("div").childNodes;
+   toSort=Array.prototype.slice.call(toSort);
+   toSort.sort(function(a,b){
+   	return parseInt(a["value"],10)-parseInt(b["value"],10);
+   });
+   for(i=0,l=toSort.length;i<l;i++)
+ document.getElementById("H1").appendChild(toSort[i]);
+   }*/
 function delete_function()
 {
-	parent=document.getElementById("myList");
-	child=document.getElementById("div");
-	parent.removeChild(child);
+	child=document.getElementById("DIV"+x1);
+	x1--;
+	child.parentNode.removeChild(child);
 }
 function save_edit_function()
 {
-
-	editElem=document.getElementById("div")||document.getElementById("myList");
+	editElem=document.getElementById("div");
 	editElem.contentEditable="false";
 	userVersion=editElem.innerHTML;
 	localStorage.userEdits=userVersion;
 	alert("Edits saved");
-	document.getElementById("update").innerHTML="To do list-";
+	document.getElementById("div").innerHTML;
 }
 function edit_function()
 {
@@ -85,10 +92,10 @@ Joe Hacker's world
 </title>
 </head>
 <body onload="checkEdits()">
-<h1 style='border:3px solid black' id="H1">Welcome to Joe Hacker's personal webpage</h1>
+<center><h1 style='border:3px solid black' id="H1">Welcome to Joe Hacker's personal webpage</h1></center>
 <u1 id="myList">
-<p id="update">To do list-</p>
-<div id="div">
+<p id="update">
+<div id="div">To do list
 </u1>
 </div>
 <hr />
@@ -97,6 +104,7 @@ Joe Hacker's world
 <input type="button" value="Edit notes" title="Click to edit notes" onclick="edit_function()">
 <input type="button" value="Delete notes" title="Click here to delete notes" onclick="delete_function()">
 <input type="button" value="Save notes" title="Click to save notes" onclick="save_edit_function()">
+<input type="button" value="Sort notes" title="Click to sort notes" onclick="sort_function()">
 </form>
 </body>
 </html>
