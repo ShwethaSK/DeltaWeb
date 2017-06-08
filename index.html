@@ -22,19 +22,18 @@ body
 }
 </style>
 <script type="text/javascript">
-var node,textnode,editElem,parent,child,userVersion,select,x1=0,i,l,par,DIV;
+var node,textnode,editElem,parent,child,userVersion,select,x1=0,i,l,par,DIV,j,toSort,newSort,abcd;
 function add_function()
 {
 	x1++;
-	DIV=document.createElement("DIV");
+	DIV=document.createElement("LI");
 	DIV.setAttribute("id","DIV"+x1);
 	var x=prompt("Please enter your note","User");
 	textnode=document.createTextNode(x);
 	DIV.appendChild(textnode);
-	node=document.getElementById("update");
+	node=document.getElementById("div");
 	node.appendChild(DIV);
 	select=prompt("Enter your priority color- Red for high priority,yellow for medium priority and green for low priority","color");
-	document.getElementById("div").appendChild(node);
 if(select=="green"){
 	document.getElementById("DIV"+x1).setAttribute("value","0");
    	document.getElementById("DIV"+x1).setAttribute("style","background-color:green");
@@ -48,16 +47,40 @@ if(select=="green"){
    	  document.getElementById("DIV"+x1).setAttribute("style","background-color:yellow");
       }
    }
-/*function sort_function()
+   function edit_priority_function()
    {
-   var toSort=document.getElementById("div").childNodes;
-   toSort=Array.prototype.slice.call(toSort);
-   toSort.sort(function(a,b){
-   	return parseInt(a["value"],10)-parseInt(b["value"],10);
-   });
-   for(i=0,l=toSort.length;i<l;i++)
- document.getElementById("H1").appendChild(toSort[i]);
-   }*/
+var number=prompt("Enter note number","Number");
+select=prompt("Enter your priority color- Red for high priority,yellow for medium priority and green for low priority","color");
+if(select=="green"){
+	document.getElementById("DIV"+number).setAttribute("value","0");
+   	document.getElementById("DIV"+number).setAttribute("style","background-color:green");
+        }
+   else if(select=="red"){
+   document.getElementById("DIV"+number).setAttribute("value","2");
+   document.getElementById("DIV"+number).setAttribute("style","background-color:red");
+   }
+   else if(select=="yellow"){
+   	document.getElementById("DIV"+number).setAttribute("value","1");
+   	  document.getElementById("DIV"+number).setAttribute("style","background-color:yellow");
+      }
+   }
+function sorting()
+   {
+   toSort=document.getElementById("div").childNodes;
+   l=toSort.length;
+   newSort=Array.prototype.slice.call(toSort);
+   abcd=Array.prototype.map.call(newSort, function(e){return e["value"];});
+   abcd.sort(function(a,b){
+   	return b-a;});
+   for(i=0; i<l;i++){
+    for(j=0;j<l;j++){
+	if(newSort[j]["value"]==abcd[i])
+		{ 
+	document.getElementById("div").appendChild(newSort[j]);	
+		}
+}
+}
+}
 function delete_function()
 {
 	child=document.getElementById("DIV"+x1);
@@ -93,18 +116,20 @@ Joe Hacker's world
 </head>
 <body onload="checkEdits()">
 <center><h1 style='border:3px solid black' id="H1">Welcome to Joe Hacker's personal webpage</h1></center>
-<u1 id="myList">
+<ul id="myList">
 <p id="update">
-<div id="div">To do list
-</u1>
+<div id="div">
 </div>
+</p>
+</ul>
 <hr />
 <form>
 <input type="button" value="Add notes" title="Click here to add notes" onclick="add_function()">
 <input type="button" value="Edit notes" title="Click to edit notes" onclick="edit_function()">
+<input type="button" value="Edit priority" title="Click to change priority" onclick="edit_priority_function()">
 <input type="button" value="Delete notes" title="Click here to delete notes" onclick="delete_function()">
 <input type="button" value="Save notes" title="Click to save notes" onclick="save_edit_function()">
-<input type="button" value="Sort notes" title="Click to sort notes" onclick="sort_function()">
+<input type="button" value="Sort notes" title="Click to sort notes" onclick="sorting()">
 </form>
 </body>
 </html>
